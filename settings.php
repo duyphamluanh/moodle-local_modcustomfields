@@ -15,13 +15,20 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin strings are defined here.
+ * This adds the custom fields management page.
  *
  * @package     local_modcustomfields
  * @copyright   2020 Daniel Neis Araujo <daniel@adapta.online>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$string['pluginname'] = 'Custom fields for activity modules';
+if ($hassiteconfig) { // Needs this condition or there is error on login page.
+    $ADMIN->add('localplugins',
+        new admin_externalpage('local_modcustomfields', new lang_string('pluginname', 'local_modcustomfields'),
+            $CFG->wwwroot . '/local/modcustomfields/customfield.php',
+            array('moodle/course:configurecustomfields')
+        )
+    );
+}
