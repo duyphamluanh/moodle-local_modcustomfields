@@ -36,11 +36,16 @@ function local_modcustomfields_coursemodule_standard_elements($formwrapper, $mfo
     $handler = local_modcustomfields\customfield\mod_handler::create();
     $handler->set_parent_context($formwrapper->get_context()); // For course handler only.
     $cm = $formwrapper->get_coursemodule();
-    $handler->instance_form_definition($mform, empty($cm->id) ? 0 : $cm->id);
+    if (empty($cm)) {
+        $cmid = 0;
+    } else {
+        $cmid = $cm->id;
+    }
+    $handler->instance_form_definition($mform, $cmid);
     // Prepare custom fields data.
     $data = $formwrapper->get_current();
     $oldid = $data->id;
-    $data->id = $cm->id;
+    $data->id = $cmid;
     $handler->instance_form_before_set_data($data);
     $data->id = $oldid;
 }
