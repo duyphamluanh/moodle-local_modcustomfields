@@ -1,8 +1,12 @@
 # Custom fields for activity modules #
 
-TODO Describe the plugin shortly here.
+This plugin adds the ability to create custom fields for activity modules.
 
-TODO Provide more detailed description here.
+Custom fields are created "globally" on the site administration and will be available to all activity modules.
+
+Each activity module can then use this fields as they like.
+
+The fields and their data can also be used in configurable reports, for example.
 
 ## License ##
 
