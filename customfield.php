@@ -35,4 +35,3 @@ echo $output->header(),
      $output->heading(new lang_string('pluginname', 'local_modcustomfields')),
      $output->render($outputpage),
      $output->footer();
-

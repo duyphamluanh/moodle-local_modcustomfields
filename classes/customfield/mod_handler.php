@@ -190,7 +190,7 @@ class mod_handler extends \core_customfield\handler {
      */
     public function config_form_definition(\MoodleQuickForm $mform) {
         $mform->addElement('header', 'mod_handler_header', get_string('customfieldsettings', 'core_course'));
-        $mform->setExpanded('course_handler_header', true);
+        $mform->setExpanded('mod_handler_header', true);
 
         // If field is locked.
         $mform->addElement('selectyesno', 'configdata[locked]', get_string('customfield_islocked', 'core_course'));
