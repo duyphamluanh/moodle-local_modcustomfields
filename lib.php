@@ -77,4 +77,5 @@ function local_modcustomfields_coursemodule_edit_post_actions($moduleinfo, $cour
     // Save the custom field data.
     $moduleinfo->id = $moduleinfo->coursemodule;
     $handler->instance_form_save($moduleinfo, true);
+    return $moduleinfo;
 }
