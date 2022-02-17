@@ -57,8 +57,8 @@ function local_modcustomfields_coursemodule_standard_elements($formwrapper, $mfo
  * @param \stdClass $data The form data.
  */
 function local_modcustomfields_coursemodule_validation($formwrapper, $data) {
-    // Add the custom fields validation.
     $handler = local_modcustomfields\customfield\mod_handler::create();
+    $handler->set_parent_context(context_course::instance($data['course']));
     return $handler->instance_form_validation($data, []);
 }
 
@@ -69,12 +69,8 @@ function local_modcustomfields_coursemodule_validation($formwrapper, $data) {
  * @param object $course the course of the module
  */
 function local_modcustomfields_coursemodule_edit_post_actions($moduleinfo, $course) {
-    // Save custom fields if there are any of them in the form.
     $handler = local_modcustomfields\customfield\mod_handler::create();
-    // Make sure to set the handler's parent context first.
-    $context = context_module::instance($moduleinfo->coursemodule);
-    $handler->set_parent_context($context);
-    // Save the custom field data.
+    $handler->set_parent_context(context_course::instance($course->id));
     $moduleinfo->id = $moduleinfo->coursemodule;
     $handler->instance_form_save($moduleinfo, true);
     return $moduleinfo;
