@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_modcustomfields';
-$plugin->release = '3';
-$plugin->version = 2022021701;
+$plugin->release = '4';
+$plugin->version = 2023070400;
 $plugin->requires = 2019052000; // Requires Moodle 3.7.
 $plugin->maturity = MATURITY_BETA;
