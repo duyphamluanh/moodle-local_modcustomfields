@@ -59,7 +59,7 @@ class mod_handler extends \core_customfield\handler {
      * Returns a singleton
      *
      * @param int $itemid
-     * @return \core_mod\customfield\mod_handler
+     * @return \local_modcustomfields\customfield\mod_handler
      */
     public static function create(int $itemid = 0) : \core_customfield\handler {
         if (static::$singleton === null) {
@@ -212,10 +212,10 @@ class mod_handler extends \core_customfield\handler {
      * @param array $data
      */
     public function restore_instance_data_from_backup(\restore_task $task, array $data) {
-        $courseid = $task->get_courseid();
-        $context = $this->get_instance_context($courseid);
-        $editablefields = $this->get_editable_fields($courseid);
-        $records = api::get_instance_fields_data($editablefields, $courseid);
+        $cmid = $task->get_moduleid();
+        $context = $this->get_instance_context($cmid);
+        $editablefields = $this->get_editable_fields($cmid);
+        $records = api::get_instance_fields_data($editablefields, $cmid);
         $target = $task->get_target();
         $override = ($target != \backup::TARGET_CURRENT_ADDING && $target != \backup::TARGET_EXISTING_ADDING);
 
