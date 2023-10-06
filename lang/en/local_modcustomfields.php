@@ -25,3 +25,4 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Custom fields for activity modules';
+$string['privacy:metadata'] = 'The local modcustomfields plugin does not store any personal data.';
