@@ -25,7 +25,7 @@
 require_once('../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
 
-admin_externalpage_setup('local_modcustomfields');
+admin_externalpage_setup('local_modcustomfields_customfield');
 
 $output = $PAGE->get_renderer('core_customfield');
 $handler = local_modcustomfields\customfield\mod_handler::create();

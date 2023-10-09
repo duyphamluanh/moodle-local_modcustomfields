@@ -25,10 +25,37 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($hassiteconfig) { // Needs this condition or there is error on login page.
-    $ADMIN->add('localplugins',
-        new admin_externalpage('local_modcustomfields', new lang_string('pluginname', 'local_modcustomfields'),
+
+    $ADMIN->add('localplugins', new admin_category('local_modcustomfields',
+        get_string('pluginname', 'local_modcustomfields')));
+
+    $ADMIN->add('local_modcustomfields',
+        new admin_externalpage('local_modcustomfields_customfield', new lang_string('customfieldsettings', 'local_modcustomfields'),
             $CFG->wwwroot . '/local/modcustomfields/customfield.php',
             array('moodle/course:configurecustomfields')
         )
     );
+    $setingpage = new admin_settingpage('local_modcustomfields_settingpage', get_string('pluginsettings', 'local_modcustomfields'));
+
+    if ($ADMIN->fulltree) {
+        $modules = $DB->get_records('modules');
+
+        $modarray = [];
+        $defaultsettings = [];
+        foreach ($modules as $module) {
+            $modarray[$module->id] = get_string('modulename', $module->name);
+            if ($module->visible != 1) {
+                $modarray[$module->id] .= get_string('moduledisabled', 'local_modcustomfields');
+            }
+        }
+        asort($modarray);
+        $modulesetting = new admin_setting_configmulticheckbox('local_modcustomfields/disabledmodules',
+            get_string('settings:disabledmodules', 'local_modcustomfields'),
+            get_string('settings:disabledmodules_desc', 'local_modcustomfields'),
+            $defaultsettings,
+            $modarray);
+        $settings = $modulesetting->get_setting();
+        $setingpage->add($modulesetting);
+    }
+    $ADMIN->add('local_modcustomfields', $setingpage);
 }

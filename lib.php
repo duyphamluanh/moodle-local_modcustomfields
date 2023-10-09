@@ -26,12 +26,20 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * Inject the custom fields elements into all moodle module settings forms.
+ * Inject the custom fields elements into selected moodle module settings forms.
  *
  * @param moodleform $formwrapper The moodle quickforms wrapper object.
  * @param MoodleQuickForm $mform The actual form object (required to modify the form).
  */
 function local_modcustomfields_coursemodule_standard_elements($formwrapper, $mform) {
+
+    $modules = get_config('local_modcustomfields', 'disabledmodules');
+    $modulearray = explode(',', $modules);
+    $currentmodule = $formwrapper->get_current()->module;
+    if (in_array($currentmodule, $modulearray)) {
+        return;
+    }
+
     // Add custom fields to the form.
     $handler = local_modcustomfields\customfield\mod_handler::create();
     $handler->set_parent_context($formwrapper->get_context()); // For course handler only.
