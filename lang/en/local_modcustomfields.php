@@ -24,10 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['customfieldsettings'] = 'Custom field settings';
-$string['moduledisabled'] = ' (module disabled)';
+$string['customfields'] = 'Custom fields';
 $string['pluginname'] = 'Custom fields for activity modules';
-$string['pluginsettings'] = 'Plugin settings';
 $string['privacy:metadata'] = 'The local modcustomfields plugin does not store any personal data.';
 $string['settings:disabledmodules'] = 'Disabled modules';
 $string['settings:disabledmodules_desc'] = 'Select the modules that you do not want to use customfields';

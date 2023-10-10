@@ -30,12 +30,12 @@ if ($hassiteconfig) { // Needs this condition or there is error on login page.
         get_string('pluginname', 'local_modcustomfields')));
 
     $ADMIN->add('local_modcustomfields',
-        new admin_externalpage('local_modcustomfields_customfield', new lang_string('customfieldsettings', 'local_modcustomfields'),
+        new admin_externalpage('local_modcustomfields_customfield', new lang_string('customfields', 'local_modcustomfields'),
             $CFG->wwwroot . '/local/modcustomfields/customfield.php',
             array('moodle/course:configurecustomfields')
         )
     );
-    $setingpage = new admin_settingpage('local_modcustomfields_settingpage', get_string('pluginsettings', 'local_modcustomfields'));
+    $setingpage = new admin_settingpage('local_modcustomfields_settingpage', get_string('settings'));
 
     if ($ADMIN->fulltree) {
         $mods = core_component::get_plugin_list('mod');
