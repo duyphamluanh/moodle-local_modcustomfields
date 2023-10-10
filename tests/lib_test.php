@@ -41,26 +41,26 @@ class lib_test extends advanced_testcase {
 
         // Setup a customfield for activities.
         $customfieldgenerator = $generator->get_plugin_generator('core_customfield');
-        $c1 = $customfieldgenerator->create_category(['component' => 'local_modcustomfields', 'area' => 'mod']);
-        $cid = $c1->get('id');
-        $customfieldgenerator->create_field(['categoryid' => $cid, 'name' => 'Custom field text',
+        $category = $customfieldgenerator->create_category(['component' => 'local_modcustomfields', 'area' => 'mod']);
+        $categoryid = $category->get('id');
+        $customfieldgenerator->create_field(['categoryid' => $categoryid, 'name' => 'Custom field text',
             'shortname' => 'cft', 'type' => 'text']);
 
         // Load assignment form.
-        $module = $DB->get_record('modules', ['name' => 'assign']);
-        $modmoodleform = "$CFG->dirroot/mod/{$module->name}/mod_form.php";
+        $module = 'assign';
+        $modmoodleform = "$CFG->dirroot/mod/{$module}/mod_form.php";
         if (file_exists($modmoodleform)) {
             require_once($modmoodleform);
         } else {
             throw new \moodle_exception('noformdesc');
         }
-        $mformclassname = 'mod_' . $module->name . '_mod_form';
+        $mformclassname = 'mod_' . $module . '_mod_form';
 
         $course = $generator->create_course();
         $PAGE->set_course($course);
 
         // Create module, and confirm if the customfield exists.
-        $mod = $generator->create_module($module->name, ['course' => $course->id]);
+        $mod = $generator->create_module($module, ['course' => $course->id]);
         [$course, $cm] = get_course_and_cm_from_cmid($mod->cmid);
         list($cm, $context, $mod, $data, $cw) = get_moduleinfo_data($cm, $course);
         $mform = new $mformclassname($data, $cw->section, $cm, $course);
@@ -69,8 +69,8 @@ class lib_test extends advanced_testcase {
         $this->assertTrue($form->elementExists('customfield_cft'));
 
         // Set disable module, create module, and confirm if the customfield does not exist.
-        set_config('disabledmodules', $module->id, 'local_modcustomfields');
-        $mod = $generator->create_module($module->name, ['course' => $course->id]);
+        set_config('disabledmodules', $module, 'local_modcustomfields');
+        $mod = $generator->create_module($module, ['course' => $course->id]);
         [$course, $cm] = get_course_and_cm_from_cmid($mod->cmid);
         list($cm, $context, $mod, $data, $cw) = get_moduleinfo_data($cm, $course);
         $mform = new $mformclassname($data, $cw->section, $cm, $course);

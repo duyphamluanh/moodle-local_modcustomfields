@@ -38,15 +38,12 @@ if ($hassiteconfig) { // Needs this condition or there is error on login page.
     $setingpage = new admin_settingpage('local_modcustomfields_settingpage', get_string('pluginsettings', 'local_modcustomfields'));
 
     if ($ADMIN->fulltree) {
-        $modules = $DB->get_records('modules');
+        $mods = core_component::get_plugin_list('mod');
 
         $modarray = [];
         $defaultsettings = [];
-        foreach ($modules as $module) {
-            $modarray[$module->id] = get_string('modulename', $module->name);
-            if ($module->visible != 1) {
-                $modarray[$module->id] .= get_string('moduledisabled', 'local_modcustomfields');
-            }
+        foreach ($mods as $mod => $path) {
+            $modarray[$mod] = get_string('modulename', $mod);
         }
         asort($modarray);
         $modulesetting = new admin_setting_configmulticheckbox('local_modcustomfields/disabledmodules',

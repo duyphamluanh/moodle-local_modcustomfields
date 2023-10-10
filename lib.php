@@ -35,7 +35,7 @@ function local_modcustomfields_coursemodule_standard_elements($formwrapper, $mfo
 
     $modules = get_config('local_modcustomfields', 'disabledmodules');
     $modulearray = explode(',', $modules);
-    $currentmodule = $formwrapper->get_current()->module;
+    $currentmodule = $formwrapper->get_current()->modulename;
     if (in_array($currentmodule, $modulearray)) {
         return;
     }
