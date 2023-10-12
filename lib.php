@@ -33,11 +33,15 @@ defined('MOODLE_INTERNAL') || die();
  */
 function local_modcustomfields_coursemodule_standard_elements($formwrapper, $mform) {
 
-    $modules = get_config('local_modcustomfields', 'disabledmodules');
-    $modulearray = explode(',', $modules);
-    $currentmodule = $formwrapper->get_current()->modulename;
-    if (in_array($currentmodule, $modulearray)) {
-        return;
+    $data = $formwrapper->get_current();
+    // Disable custom fields if the current module is set disabled.
+    if (!empty($data->modulename)) {
+        $currentmodule = $data->modulename;
+        $disabledmodules = get_config('local_modcustomfields', 'disabledmodules');
+        $disabledmodules = explode(',', $disabledmodules);
+        if (in_array($currentmodule, $disabledmodules)) {
+            return;
+        }
     }
 
     // Add custom fields to the form.
@@ -51,7 +55,9 @@ function local_modcustomfields_coursemodule_standard_elements($formwrapper, $mfo
     }
     $handler->instance_form_definition($mform, $cmid);
     // Prepare custom fields data.
-    $data = $formwrapper->get_current();
+    if (empty($data->id)) {
+        $data->id = 0;
+    }
     $oldid = $data->id;
     $data->id = $cmid;
     $handler->instance_form_before_set_data($data);
