@@ -77,5 +77,7 @@ class lib_test extends advanced_testcase {
         $form = new \MoodleQuickForm('test', 'post', '');
         local_modcustomfields_coursemodule_standard_elements($mform, $form);
         $this->assertFalse($form->elementExists('customfield_cft'));
+
+        \local_modcustomfields\customfield\mod_handler::reset_caches();
     }
 }
